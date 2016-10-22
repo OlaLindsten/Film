@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -79,7 +80,23 @@ public class connection extends javax.swing.JFrame {
     }
     
     //excute query
-    public void execute
+    public void executeSQLQuery(String query,String message){
+        Connection conn = getConnection();
+        Statement st;
+        
+        try {
+            st=conn.createStatement();
+            if((st.executeUpdate(query)) == 1){
+                
+                JOptionPane.showMessageDialog(null, "Data " + message+ " Succesfully");
+            }else{
+                
+                JOptionPane.showMessageDialog(null, "Data not" + message);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +144,11 @@ public class connection extends javax.swing.JFrame {
         p1.setGridColor(new java.awt.Color(0, 0, 0));
         p1.setSelectionBackground(new java.awt.Color(0, 0, 0));
         p1.getTableHeader().setReorderingAllowed(false);
+        p1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                p1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(p1);
 
         btnfilm.setText("Visa filmer");
@@ -316,17 +338,15 @@ public class connection extends javax.swing.JFrame {
 
     private void sparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sparaActionPerformed
 
-       /* DefaultTableModel model = (DefaultTableModel) p1.getModel();
-
-        model.addRow(new Object[]{
-            text_titel.getText(),
-            text_genre.getText(),
-            text_regissor.getText(),
-            text_betyg.getText(),
-            text_langd.getText()
-
-        }); 
-
+        String query = "INSERT INTO `filmer`(`titel`, `genre`, `regissör`, `betyg`, `längd`) "
+                + "VALUES ('"+text_titel.getText()+"','"+text_genre.getText()+"','"+text_regissor.getText()+"',"
+                + "'"+text_betyg.getText()+"','"+text_langd.getText()+"')";
+        
+        executeSQLQuery(query,"Inserted");
+        
+        
+       
+                /*
         try {
             
             
@@ -361,6 +381,18 @@ public class connection extends javax.swing.JFrame {
 
         } */  
     }//GEN-LAST:event_sparaActionPerformed
+
+    private void p1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_p1MouseClicked
+        
+        int i = p1.getSelectedRow();
+        TableModel model = p1.getModel();
+        text_titel.setText(model.getValueAt(i, 0).toString());
+        text_genre.setText(model.getValueAt(i, 1).toString());
+        text_regissor.setText(model.getValueAt(i, 2).toString());
+        text_betyg.setText(model.getValueAt(i, 3).toString());
+        text_langd.setText(model.getValueAt(i, 4).toString());
+        
+    }//GEN-LAST:event_p1MouseClicked
 
     /**
      * @param args the command line arguments
