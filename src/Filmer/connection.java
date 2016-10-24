@@ -1,3 +1,5 @@
+package Filmer;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,8 +51,7 @@ public class connection extends javax.swing.JFrame {
             rs = st.executeQuery(query);
             Film film;
             while (rs.next()) {
-                film = new Film(rs.getString("titel"),
-                        rs.getString("genre"), rs.getString("regissör"), rs.getString("betyg"), rs.getString("längd"));
+                film = new Film(rs.getInt("id"),rs.getString("titel"), rs.getString("genre"), rs.getString("regissör"), rs.getString("betyg"), rs.getString("längd"));
                 filmerList.add(film);
             }
 
@@ -60,19 +61,20 @@ public class connection extends javax.swing.JFrame {
         return filmerList;
     }
 
-    //display data in Jtable
+    
     public void show_filmer() {
 
         ArrayList<Film> list = getFilmerList();
         DefaultTableModel model = (DefaultTableModel) p1.getModel();
-        Object[] row = new Object[5];
+        Object[] row = new Object[6];
         for (int i = 0; i < list.size(); i++) {
-
-            row[1] = list.get(i).gettitel();
-            row[2] = list.get(i).getgenre();
-            row[3] = list.get(i).getregissör();
-            row[4] = list.get(i).getbetyg();
-            row[5] = list.get(i).getlängd();
+            
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getTitel();
+            row[2] = list.get(i).getGenre();
+            row[3] = list.get(i).getRegissör();
+            row[4] = list.get(i).getBetyg();
+            row[5] = list.get(i).getLängd();
 
             model.addRow(row);
         }
@@ -86,14 +88,14 @@ public class connection extends javax.swing.JFrame {
         try {
             st = conn.createStatement();
             if ((st.executeUpdate(query)) == 1) {
-                
+
                 DefaultTableModel model = (DefaultTableModel) p1.getModel();
                 model.setRowCount(0);
-                JOptionPane.showMessageDialog(null, "Data " + message + " Succesfully");
                 show_filmer();
+                JOptionPane.showMessageDialog(null, "Data " + message + " Succesfully");
             } else {
 
-                JOptionPane.showMessageDialog(null, "Data not" + message);
+                JOptionPane.showMessageDialog(null, "Datan togs inte bort" + message);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,7 +129,6 @@ public class connection extends javax.swing.JFrame {
         spara = new javax.swing.JButton();
         jta_bort = new javax.swing.JButton();
         Juppdatera = new javax.swing.JButton();
-        text_id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,7 +144,7 @@ public class connection extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title", "Genre", "Regissör", "Betyg", "Längd"
+                "Id", "Titel", "Genre", "Regissör", "Betyg", "Längd"
             }
         ));
         p1.setGridColor(new java.awt.Color(0, 0, 0));
@@ -216,8 +217,6 @@ public class connection extends javax.swing.JFrame {
             }
         });
 
-        text_id.setText("jTextField1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -238,45 +237,36 @@ public class connection extends javax.swing.JFrame {
                         .addComponent(Juppdatera)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Jtitel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(text_titel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Jtitel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(text_titel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jgenre, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(55, 55, 55))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(text_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jregissor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(55, 55, 55)
-                                        .addComponent(jbetyg, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(55, 55, 55))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(text_regissor, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(text_betyg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jlangd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(text_langd, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 53, Short.MAX_VALUE))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(text_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jgenre, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(text_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jregissor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addComponent(jbetyg, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(text_regissor, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(text_betyg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlangd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(text_langd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,9 +296,7 @@ public class connection extends javax.swing.JFrame {
                     .addComponent(spara, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(jta_bort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Juppdatera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(13, 13, 13)
-                .addComponent(text_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,13 +325,14 @@ public class connection extends javax.swing.JFrame {
             String query = "Select * from filmer;";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                int Id = rs.getInt("id");
                 String Title = rs.getString("titel");
                 String Genre = rs.getString("genre");
                 String Regissör = rs.getString("regissör");
                 String Betyg = rs.getString("betyg");
                 String Langd = rs.getString("längd");
 
-                model.addRow(new Object[]{Title, Genre, Regissör, Betyg, Langd});
+                model.addRow(new Object[]{Id,Title, Genre, Regissör, Betyg, Langd});
 
             }
 
@@ -356,7 +345,7 @@ public class connection extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e);
         }
 
-        
+
     }//GEN-LAST:event_btnfilmActionPerformed
 
 
@@ -435,8 +424,8 @@ public class connection extends javax.swing.JFrame {
     private void JuppdateraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JuppdateraActionPerformed
 
         String query = "UPDATE `filmer` SET `titel`='" + text_titel.getText() + "',`genre`='" + text_genre.getText()
-                + "',`regissör`='" + text_regissor.getText() + "',`betyg`='" + text_betyg.getText() + 
-                "',`längd`='" + text_langd.getText() + "' WHERE `id`= " + text_titel.getText();
+                + "',`regissör`='" + text_regissor.getText() + "',`betyg`='" + text_betyg.getText()
+                + "',`längd`='" + text_langd.getText() + "' WHERE `id`= " + text_titel.getText();
 
         executeSQLQuery(query, "Uppdaterad");
 
@@ -501,7 +490,6 @@ public class connection extends javax.swing.JFrame {
     private javax.swing.JButton spara;
     private javax.swing.JTextField text_betyg;
     private javax.swing.JTextField text_genre;
-    private javax.swing.JTextField text_id;
     private javax.swing.JTextField text_langd;
     private javax.swing.JTextField text_regissor;
     private javax.swing.JTextField text_titel;
