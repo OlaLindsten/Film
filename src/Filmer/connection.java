@@ -1,5 +1,6 @@
 package Filmer;
 
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class connection extends javax.swing.JFrame {
     public connection() {
         initComponents();
         show_filmer();
+        setTitle("Olas Filmdatabas");
     }
 
     public Connection getConnection() {
@@ -91,6 +93,12 @@ public class connection extends javax.swing.JFrame {
                 model.setRowCount(0);
                 show_filmer();
                 JOptionPane.showMessageDialog(null, "Data " + message + " Lyckades");
+                //Rensa text fälten
+                text_titel.setText("");
+                text_genre.setText("");
+                text_regissor.setText("");
+                text_betyg.setText("");
+                text_langd.setText("");
             } else {
 
                 JOptionPane.showMessageDialog(null, "Datan togs inte bort " + message);
@@ -118,8 +126,6 @@ public class connection extends javax.swing.JFrame {
         text_genre = new javax.swing.JTextField();
         text_langd = new javax.swing.JTextField();
         text_betyg = new javax.swing.JTextField();
-        spara = new javax.swing.JButton();
-        jta_bort = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -129,6 +135,9 @@ public class connection extends javax.swing.JFrame {
         jbetyg = new javax.swing.JLabel();
         jlangd = new javax.swing.JLabel();
         Juppdatera = new javax.swing.JButton();
+        spara = new javax.swing.JButton();
+        jRensa = new javax.swing.JButton();
+        jta_bort = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,9 +197,9 @@ public class connection extends javax.swing.JFrame {
             }
         });
         jPanel1.add(text_titel);
-        text_titel.setBounds(1130, 110, 125, 36);
+        text_titel.setBounds(1130, 110, 146, 36);
         jPanel1.add(text_regissor);
-        text_regissor.setBounds(1130, 230, 125, 36);
+        text_regissor.setBounds(1130, 230, 146, 36);
 
         text_genre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,29 +207,11 @@ public class connection extends javax.swing.JFrame {
             }
         });
         jPanel1.add(text_genre);
-        text_genre.setBounds(1130, 170, 125, 36);
+        text_genre.setBounds(1130, 170, 146, 36);
         jPanel1.add(text_langd);
-        text_langd.setBounds(1130, 350, 125, 36);
+        text_langd.setBounds(1130, 350, 144, 36);
         jPanel1.add(text_betyg);
-        text_betyg.setBounds(1130, 290, 125, 36);
-
-        spara.setText("Lägg till");
-        spara.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sparaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(spara);
-        spara.setBounds(1050, 470, 80, 33);
-
-        jta_bort.setText("Ta bort");
-        jta_bort.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jta_bortActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jta_bort);
-        jta_bort.setBounds(1190, 470, 83, 33);
+        text_betyg.setBounds(1130, 290, 144, 36);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/bio.jpg"))); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(1170, 610));
@@ -274,7 +265,34 @@ public class connection extends javax.swing.JFrame {
             }
         });
         jPanel2.add(Juppdatera);
-        Juppdatera.setBounds(110, 520, 110, 33);
+        Juppdatera.setBounds(34, 500, 110, 33);
+
+        spara.setText("Lägg till");
+        spara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sparaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(spara);
+        spara.setBounds(32, 444, 110, 33);
+
+        jRensa.setText("Rensa");
+        jRensa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRensaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jRensa);
+        jRensa.setBounds(182, 500, 108, 32);
+
+        jta_bort.setText("Ta bort");
+        jta_bort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jta_bortActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jta_bort);
+        jta_bort.setBounds(182, 444, 110, 34);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(1000, 0, 310, 570);
@@ -305,12 +323,19 @@ public class connection extends javax.swing.JFrame {
 
     private void sparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sparaActionPerformed
 
-        String query = "INSERT INTO `filmer`(`titel`, `genre`, `regissör`, `betyg`, `längd`) "
-                + "VALUES ('" + text_titel.getText() + "','" + text_genre.getText() + "','" + text_regissor.getText() + "',"
-                + "'" + text_betyg.getText() + "','" + text_langd.getText() + "')";
+        if (text_titel.getText().equals("")
+                || text_genre.getText().equals("")
+                || text_regissor.getText().equals("")
+                || text_betyg.getText().equals("")
+                || text_langd.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Var vänlig skriv i alla boxar");
+        } else {
+            String query = "INSERT INTO `filmer`(`titel`, `genre`, `regissör`, `betyg`, `längd`) "
+                    + "VALUES ('" + text_titel.getText() + "','" + text_genre.getText() + "','" + text_regissor.getText() + "',"
+                    + "'" + text_betyg.getText() + "','" + text_langd.getText() + "')";
 
-        executeSQLQuery(query, "Inlagt");
-
+            executeSQLQuery(query, "Inlagt");
+        }
     }//GEN-LAST:event_sparaActionPerformed
 
     private void JtabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtabelMouseClicked
@@ -325,21 +350,11 @@ public class connection extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JtabelMouseClicked
 
-    public void refresh() {
-
-        DefaultTableModel model = (DefaultTableModel) Jtabel.getModel();
-        model.setRowCount(0);
-        show_filmer();
-    }
-
-
     private void jta_bortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jta_bortActionPerformed
 
-        Connection conn = getConnection();
-        
         int i = Jtabel.getSelectedRow();
         String id = Jtabel.getModel().getValueAt(i, 0).toString();
-        String query = "delete from filmer where id = "+ id;
+        String query = "delete from filmer where id = " + id;
 
         executeSQLQuery(query, "Borttagen");
     }//GEN-LAST:event_jta_bortActionPerformed
@@ -347,10 +362,10 @@ public class connection extends javax.swing.JFrame {
     private void JuppdateraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JuppdateraActionPerformed
 
         Connection conn = getConnection();
-        
+
         int i = Jtabel.getSelectedRow();
         String id = Jtabel.getModel().getValueAt(i, 0).toString();
-        
+
         String query = "UPDATE `filmer` SET `titel`='" + text_titel.getText() + "',`genre`='" + text_genre.getText()
                 + "',`regissör`='" + text_regissor.getText() + "',`betyg`='" + text_betyg.getText()
                 + "',`längd`='" + text_langd.getText() + "' WHERE `id`= " + id;
@@ -358,6 +373,17 @@ public class connection extends javax.swing.JFrame {
         executeSQLQuery(query, "Uppdaterad");
 
     }//GEN-LAST:event_JuppdateraActionPerformed
+
+    private void jRensaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRensaActionPerformed
+
+        //Rensa text fälten
+        text_titel.setText("");
+        text_genre.setText("");
+        text_regissor.setText("");
+        text_betyg.setText("");
+        text_langd.setText("");
+
+    }//GEN-LAST:event_jRensaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,6 +437,7 @@ public class connection extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jRensa;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jbetyg;
     private javax.swing.JLabel jgenre;
