@@ -63,7 +63,7 @@ public class connection extends javax.swing.JFrame {
     public void show_filmer() {
 
         ArrayList<Film> list = getFilmerList();
-        DefaultTableModel model = (DefaultTableModel) p1.getModel();
+        DefaultTableModel model = (DefaultTableModel) Jtabel.getModel();
         Object[] row = new Object[6];
         for (int i = 0; i < list.size(); i++) {
 
@@ -87,7 +87,7 @@ public class connection extends javax.swing.JFrame {
             st = conn.createStatement();
             if ((st.executeUpdate(query)) == 1) {
 
-                DefaultTableModel model = (DefaultTableModel) p1.getModel();
+                DefaultTableModel model = (DefaultTableModel) Jtabel.getModel();
                 model.setRowCount(0);
                 show_filmer();
                 JOptionPane.showMessageDialog(null, "Data " + message + " Lyckades");
@@ -112,92 +112,106 @@ public class connection extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        p1 = new javax.swing.JTable();
+        Jtabel = new javax.swing.JTable();
         text_titel = new javax.swing.JTextField();
-        Jtitel = new javax.swing.JLabel();
-        jgenre = new javax.swing.JLabel();
-        jregissor = new javax.swing.JLabel();
-        jbetyg = new javax.swing.JLabel();
-        jlangd = new javax.swing.JLabel();
         text_regissor = new javax.swing.JTextField();
         text_genre = new javax.swing.JTextField();
         text_langd = new javax.swing.JTextField();
         text_betyg = new javax.swing.JTextField();
         spara = new javax.swing.JButton();
         jta_bort = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        Jtitel = new javax.swing.JLabel();
+        jgenre = new javax.swing.JLabel();
+        jregissor = new javax.swing.JLabel();
+        jbetyg = new javax.swing.JLabel();
+        jlangd = new javax.swing.JLabel();
         Juppdatera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Olas filmdatabas");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(480, 0, 210, 30);
 
-        p1.setAutoCreateRowSorter(true);
-        p1.setBackground(new java.awt.Color(0, 0, 0));
-        p1.setForeground(new java.awt.Color(240, 240, 240));
-        p1.setModel(new javax.swing.table.DefaultTableModel(
+        Jtabel.setAutoCreateRowSorter(true);
+        Jtabel.setBackground(new java.awt.Color(0, 0, 0));
+        Jtabel.setForeground(new java.awt.Color(240, 240, 240));
+        Jtabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Id", "Titel", "Genre", "Regissör", "Betyg", "Längd"
             }
-        ));
-        p1.setFocusTraversalPolicyProvider(true);
-        p1.setFocusable(false);
-        p1.setGridColor(new java.awt.Color(255, 0, 0));
-        p1.setSelectionBackground(new java.awt.Color(51, 255, 51));
-        p1.setSurrendersFocusOnKeystroke(true);
-        p1.getTableHeader().setReorderingAllowed(false);
-        p1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                p1MouseClicked(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(p1);
-        p1.getAccessibleContext().setAccessibleDescription("");
+        Jtabel.setFocusable(false);
+        Jtabel.setGridColor(new java.awt.Color(255, 0, 0));
+        Jtabel.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        Jtabel.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        Jtabel.setSurrendersFocusOnKeystroke(true);
+        Jtabel.getTableHeader().setReorderingAllowed(false);
+        Jtabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtabelMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(Jtabel);
+        if (Jtabel.getColumnModel().getColumnCount() > 0) {
+            Jtabel.getColumnModel().getColumn(2).setResizable(false);
+        }
+        Jtabel.getAccessibleContext().setAccessibleDescription("");
 
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(160, 50, 800, 390);
+
+        text_titel.setSelectedTextColor(new java.awt.Color(0, 0, 255));
+        text_titel.setSelectionColor(new java.awt.Color(153, 153, 153));
         text_titel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text_titelActionPerformed(evt);
             }
         });
-
-        Jtitel.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        Jtitel.setForeground(new java.awt.Color(240, 240, 240));
-        Jtitel.setText("Title");
-
-        jgenre.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jgenre.setForeground(new java.awt.Color(240, 240, 240));
-        jgenre.setText("Genre");
-
-        jregissor.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jregissor.setForeground(new java.awt.Color(240, 240, 240));
-        jregissor.setText("Regissör");
-
-        jbetyg.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jbetyg.setForeground(new java.awt.Color(240, 240, 240));
-        jbetyg.setText("Betyg");
-
-        jlangd.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jlangd.setForeground(new java.awt.Color(240, 240, 240));
-        jlangd.setText("Längd");
+        jPanel1.add(text_titel);
+        text_titel.setBounds(1130, 110, 125, 36);
+        jPanel1.add(text_regissor);
+        text_regissor.setBounds(1130, 230, 125, 36);
 
         text_genre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text_genreActionPerformed(evt);
             }
         });
+        jPanel1.add(text_genre);
+        text_genre.setBounds(1130, 170, 125, 36);
+        jPanel1.add(text_langd);
+        text_langd.setBounds(1130, 350, 125, 36);
+        jPanel1.add(text_betyg);
+        text_betyg.setBounds(1130, 290, 125, 36);
 
-        spara.setText("Spara");
+        spara.setText("Lägg till");
         spara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sparaActionPerformed(evt);
             }
         });
+        jPanel1.add(spara);
+        spara.setBounds(1050, 470, 80, 33);
 
         jta_bort.setText("Ta bort");
         jta_bort.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +219,53 @@ public class connection extends javax.swing.JFrame {
                 jta_bortActionPerformed(evt);
             }
         });
+        jPanel1.add(jta_bort);
+        jta_bort.setBounds(1190, 470, 83, 33);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/bio.jpg"))); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(1170, 610));
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(0, 0, 1010, 570);
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setLayout(null);
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel3.setText("Lägg till en film");
+        jPanel2.add(jLabel3);
+        jLabel3.setBounds(70, 30, 190, 30);
+
+        Jtitel.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
+        Jtitel.setForeground(new java.awt.Color(240, 240, 240));
+        Jtitel.setText("Title");
+        jPanel2.add(Jtitel);
+        Jtitel.setBounds(30, 110, 80, 28);
+
+        jgenre.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
+        jgenre.setForeground(new java.awt.Color(240, 240, 240));
+        jgenre.setText("Genre");
+        jPanel2.add(jgenre);
+        jgenre.setBounds(30, 170, 80, 28);
+
+        jregissor.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
+        jregissor.setForeground(new java.awt.Color(240, 240, 240));
+        jregissor.setText("Regissör");
+        jPanel2.add(jregissor);
+        jregissor.setBounds(30, 230, 80, 28);
+
+        jbetyg.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
+        jbetyg.setForeground(new java.awt.Color(240, 240, 240));
+        jbetyg.setText("Betyg");
+        jPanel2.add(jbetyg);
+        jbetyg.setBounds(30, 290, 70, 28);
+
+        jlangd.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
+        jlangd.setForeground(new java.awt.Color(240, 240, 240));
+        jlangd.setText("Längd");
+        jPanel2.add(jlangd);
+        jlangd.setBounds(30, 350, 80, 28);
 
         Juppdatera.setText("Uppdatera");
         Juppdatera.addActionListener(new java.awt.event.ActionListener() {
@@ -212,94 +273,21 @@ public class connection extends javax.swing.JFrame {
                 JuppdateraActionPerformed(evt);
             }
         });
+        jPanel2.add(Juppdatera);
+        Juppdatera.setBounds(110, 520, 110, 33);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Jtitel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(text_titel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jgenre, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(text_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jregissor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55)
-                                .addComponent(jbetyg, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(text_regissor, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(text_betyg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlangd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(text_langd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 45, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(228, 228, 228)
-                        .addComponent(spara, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jta_bort, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(Juppdatera))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Jtitel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jgenre, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jregissor, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbetyg, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlangd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(text_titel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(text_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(text_regissor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(text_betyg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(text_langd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(spara, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(jta_bort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Juppdatera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(230, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(1000, 0, 310, 570);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1314, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
         );
 
         pack();
@@ -325,21 +313,21 @@ public class connection extends javax.swing.JFrame {
 
     }//GEN-LAST:event_sparaActionPerformed
 
-    private void p1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_p1MouseClicked
+    private void JtabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtabelMouseClicked
 
-        int i = p1.getSelectedRow();
-        TableModel model = p1.getModel();
+        int i = Jtabel.getSelectedRow();
+        TableModel model = Jtabel.getModel();
         text_titel.setText(model.getValueAt(i, 1).toString());
         text_genre.setText(model.getValueAt(i, 2).toString());
         text_regissor.setText(model.getValueAt(i, 3).toString());
         text_betyg.setText(model.getValueAt(i, 4).toString());
         text_langd.setText(model.getValueAt(i, 5).toString());
 
-    }//GEN-LAST:event_p1MouseClicked
+    }//GEN-LAST:event_JtabelMouseClicked
 
     public void refresh() {
 
-        DefaultTableModel model = (DefaultTableModel) p1.getModel();
+        DefaultTableModel model = (DefaultTableModel) Jtabel.getModel();
         model.setRowCount(0);
         show_filmer();
     }
@@ -349,8 +337,8 @@ public class connection extends javax.swing.JFrame {
 
         Connection conn = getConnection();
         
-        int i = p1.getSelectedRow();
-        String id = p1.getModel().getValueAt(i, 0).toString();
+        int i = Jtabel.getSelectedRow();
+        String id = Jtabel.getModel().getValueAt(i, 0).toString();
         String query = "delete from filmer where id = "+ id;
 
         executeSQLQuery(query, "Borttagen");
@@ -360,8 +348,8 @@ public class connection extends javax.swing.JFrame {
 
         Connection conn = getConnection();
         
-        int i = p1.getSelectedRow();
-        String id = p1.getModel().getValueAt(i, 0).toString();
+        int i = Jtabel.getSelectedRow();
+        String id = Jtabel.getModel().getValueAt(i, 0).toString();
         
         String query = "UPDATE `filmer` SET `titel`='" + text_titel.getText() + "',`genre`='" + text_genre.getText()
                 + "',`regissör`='" + text_regissor.getText() + "',`betyg`='" + text_betyg.getText()
@@ -415,17 +403,20 @@ public class connection extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Jtabel;
     private javax.swing.JLabel Jtitel;
     private javax.swing.JButton Juppdatera;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jbetyg;
     private javax.swing.JLabel jgenre;
     private javax.swing.JLabel jlangd;
     private javax.swing.JLabel jregissor;
     private javax.swing.JButton jta_bort;
-    private javax.swing.JTable p1;
     private javax.swing.JButton spara;
     private javax.swing.JTextField text_betyg;
     private javax.swing.JTextField text_genre;
