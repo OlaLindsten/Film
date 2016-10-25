@@ -1,6 +1,5 @@
 package Filmer;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -51,7 +50,7 @@ public class connection extends javax.swing.JFrame {
             rs = st.executeQuery(query);
             Film film;
             while (rs.next()) {
-                film = new Film(rs.getInt("id"),rs.getString("titel"), rs.getString("genre"), rs.getString("regissör"), rs.getString("betyg"), rs.getString("längd"));
+                film = new Film(rs.getInt("id"), rs.getString("titel"), rs.getString("genre"), rs.getString("regissör"), rs.getString("betyg"), rs.getString("längd"));
                 filmerList.add(film);
             }
 
@@ -61,14 +60,13 @@ public class connection extends javax.swing.JFrame {
         return filmerList;
     }
 
-    
     public void show_filmer() {
 
         ArrayList<Film> list = getFilmerList();
         DefaultTableModel model = (DefaultTableModel) p1.getModel();
         Object[] row = new Object[6];
         for (int i = 0; i < list.size(); i++) {
-            
+
             row[0] = list.get(i).getId();
             row[1] = list.get(i).getTitel();
             row[2] = list.get(i).getGenre();
@@ -92,10 +90,10 @@ public class connection extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) p1.getModel();
                 model.setRowCount(0);
                 show_filmer();
-                JOptionPane.showMessageDialog(null, "Data " + message + " Succesfully");
+                JOptionPane.showMessageDialog(null, "Data " + message + " Lyckades");
             } else {
 
-                JOptionPane.showMessageDialog(null, "Datan togs inte bort" + message);
+                JOptionPane.showMessageDialog(null, "Datan togs inte bort " + message);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +113,6 @@ public class connection extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         p1 = new javax.swing.JTable();
-        btnfilm = new javax.swing.JButton();
         text_titel = new javax.swing.JTextField();
         Jtitel = new javax.swing.JLabel();
         jgenre = new javax.swing.JLabel();
@@ -139,6 +136,8 @@ public class connection extends javax.swing.JFrame {
         jLabel1.setText("Olas filmdatabas");
 
         p1.setAutoCreateRowSorter(true);
+        p1.setBackground(new java.awt.Color(0, 0, 0));
+        p1.setForeground(new java.awt.Color(240, 240, 240));
         p1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -147,8 +146,11 @@ public class connection extends javax.swing.JFrame {
                 "Id", "Titel", "Genre", "Regissör", "Betyg", "Längd"
             }
         ));
-        p1.setGridColor(new java.awt.Color(0, 0, 0));
-        p1.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        p1.setFocusTraversalPolicyProvider(true);
+        p1.setFocusable(false);
+        p1.setGridColor(new java.awt.Color(255, 0, 0));
+        p1.setSelectionBackground(new java.awt.Color(51, 255, 51));
+        p1.setSurrendersFocusOnKeystroke(true);
         p1.getTableHeader().setReorderingAllowed(false);
         p1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -156,13 +158,7 @@ public class connection extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(p1);
-
-        btnfilm.setText("Visa filmer");
-        btnfilm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnfilmActionPerformed(evt);
-            }
-        });
+        p1.getAccessibleContext().setAccessibleDescription("");
 
         text_titel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,21 +218,6 @@ public class connection extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnfilm, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(228, 228, 228)
-                        .addComponent(spara, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jta_bort, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(Juppdatera)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,14 +248,25 @@ public class connection extends javax.swing.JFrame {
                             .addComponent(jlangd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(text_langd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 45, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(spara, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jta_bort, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(Juppdatera))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnfilm))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
@@ -312,42 +304,7 @@ public class connection extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnfilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfilmActionPerformed
-
-        DefaultTableModel model = (DefaultTableModel) p1.getModel();
-        try {
-
-            model.setRowCount(0);
-
-            Connection conn = getConnection();
-            Statement stmt = conn.createStatement();
-            String query = "Select * from filmer;";
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int Id = rs.getInt("id");
-                String Title = rs.getString("titel");
-                String Genre = rs.getString("genre");
-                String Regissör = rs.getString("regissör");
-                String Betyg = rs.getString("betyg");
-                String Langd = rs.getString("längd");
-
-                model.addRow(new Object[]{Id,Title, Genre, Regissör, Betyg, Langd});
-
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(this, e);
-        }
-
-
-    }//GEN-LAST:event_btnfilmActionPerformed
-
+    /*    */
 
     private void text_titelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_titelActionPerformed
 
@@ -364,68 +321,51 @@ public class connection extends javax.swing.JFrame {
                 + "VALUES ('" + text_titel.getText() + "','" + text_genre.getText() + "','" + text_regissor.getText() + "',"
                 + "'" + text_betyg.getText() + "','" + text_langd.getText() + "')";
 
-        executeSQLQuery(query, "Inserted");
+        executeSQLQuery(query, "Inlagt");
 
-        /*
-        try {
-            
-            
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/filmregister", "root", "");
-            DefaultTableModel model = (DefaultTableModel) p1.getModel();
-            Statement stmt = conn.createStatement();
-            ResultSet rs;
-            PreparedStatement pst;
-
-
-            
-            String sql = "SELECT ID,titel,genre,regissör,betyg,längd FROM filmer WHERE ID =?";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, text_titel.getText());
-
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                String titel = rs.getString("titel");
-                text_titel.setText(titel);
-                String genre = rs.getString("genre");
-                text_genre.setText(genre);
-                String regi = rs.getString("regissör");
-                text_regissor.setText(regi);
-                String betyg = rs.getString("betyg");
-                text_betyg.setText(betyg);
-                String langd = rs.getString("längd");
-                text_langd.setText(langd);
-
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-
-        } */
     }//GEN-LAST:event_sparaActionPerformed
 
     private void p1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_p1MouseClicked
 
         int i = p1.getSelectedRow();
         TableModel model = p1.getModel();
-        text_titel.setText(model.getValueAt(i, 0).toString());
-        text_genre.setText(model.getValueAt(i, 1).toString());
-        text_regissor.setText(model.getValueAt(i, 2).toString());
-        text_betyg.setText(model.getValueAt(i, 3).toString());
-        text_langd.setText(model.getValueAt(i, 4).toString());
+        text_titel.setText(model.getValueAt(i, 1).toString());
+        text_genre.setText(model.getValueAt(i, 2).toString());
+        text_regissor.setText(model.getValueAt(i, 3).toString());
+        text_betyg.setText(model.getValueAt(i, 4).toString());
+        text_langd.setText(model.getValueAt(i, 5).toString());
 
     }//GEN-LAST:event_p1MouseClicked
 
+    public void refresh() {
+
+        DefaultTableModel model = (DefaultTableModel) p1.getModel();
+        model.setRowCount(0);
+        show_filmer();
+    }
+
+
     private void jta_bortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jta_bortActionPerformed
 
-        String query = "DELETE FROM `filmer` WHERE id = " + text_titel.getText();
+        Connection conn = getConnection();
+        
+        int i = p1.getSelectedRow();
+        String id = p1.getModel().getValueAt(i, 0).toString();
+        String query = "delete from filmer where id = "+ id;
 
         executeSQLQuery(query, "Borttagen");
     }//GEN-LAST:event_jta_bortActionPerformed
 
     private void JuppdateraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JuppdateraActionPerformed
 
+        Connection conn = getConnection();
+        
+        int i = p1.getSelectedRow();
+        String id = p1.getModel().getValueAt(i, 0).toString();
+        
         String query = "UPDATE `filmer` SET `titel`='" + text_titel.getText() + "',`genre`='" + text_genre.getText()
                 + "',`regissör`='" + text_regissor.getText() + "',`betyg`='" + text_betyg.getText()
-                + "',`längd`='" + text_langd.getText() + "' WHERE `id`= " + text_titel.getText();
+                + "',`längd`='" + text_langd.getText() + "' WHERE `id`= " + id;
 
         executeSQLQuery(query, "Uppdaterad");
 
@@ -477,7 +417,6 @@ public class connection extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jtitel;
     private javax.swing.JButton Juppdatera;
-    private javax.swing.JButton btnfilm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
