@@ -122,10 +122,6 @@ public class connection extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Jtabel = new javax.swing.JTable();
         text_titel = new javax.swing.JTextField();
-        text_regissor = new javax.swing.JTextField();
-        text_genre = new javax.swing.JTextField();
-        text_langd = new javax.swing.JTextField();
-        text_betyg = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -138,6 +134,10 @@ public class connection extends javax.swing.JFrame {
         spara = new javax.swing.JButton();
         jRensa = new javax.swing.JButton();
         jta_bort = new javax.swing.JButton();
+        text_genre = new javax.swing.JTextField();
+        text_regissor = new javax.swing.JTextField();
+        text_betyg = new javax.swing.JTextField();
+        text_langd = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,10 +148,11 @@ public class connection extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Olas filmdatabas");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(480, 0, 210, 30);
+        jLabel1.setBounds(480, 6, 210, 30);
 
         Jtabel.setAutoCreateRowSorter(true);
         Jtabel.setBackground(new java.awt.Color(0, 0, 0));
+        Jtabel.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         Jtabel.setForeground(new java.awt.Color(240, 240, 240));
         Jtabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,12 +183,23 @@ public class connection extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(Jtabel);
         if (Jtabel.getColumnModel().getColumnCount() > 0) {
+            Jtabel.getColumnModel().getColumn(0).setResizable(false);
+            Jtabel.getColumnModel().getColumn(0).setPreferredWidth(20);
+            Jtabel.getColumnModel().getColumn(1).setResizable(false);
+            Jtabel.getColumnModel().getColumn(1).setPreferredWidth(170);
             Jtabel.getColumnModel().getColumn(2).setResizable(false);
+            Jtabel.getColumnModel().getColumn(2).setPreferredWidth(80);
+            Jtabel.getColumnModel().getColumn(3).setResizable(false);
+            Jtabel.getColumnModel().getColumn(3).setPreferredWidth(90);
+            Jtabel.getColumnModel().getColumn(4).setResizable(false);
+            Jtabel.getColumnModel().getColumn(4).setPreferredWidth(80);
+            Jtabel.getColumnModel().getColumn(5).setResizable(false);
+            Jtabel.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
         Jtabel.getAccessibleContext().setAccessibleDescription("");
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(160, 50, 800, 390);
+        jScrollPane2.setBounds(116, 50, 844, 392);
 
         text_titel.setSelectedTextColor(new java.awt.Color(0, 0, 255));
         text_titel.setSelectionColor(new java.awt.Color(153, 153, 153));
@@ -197,21 +209,7 @@ public class connection extends javax.swing.JFrame {
             }
         });
         jPanel1.add(text_titel);
-        text_titel.setBounds(1130, 110, 146, 36);
-        jPanel1.add(text_regissor);
-        text_regissor.setBounds(1130, 230, 146, 36);
-
-        text_genre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                text_genreActionPerformed(evt);
-            }
-        });
-        jPanel1.add(text_genre);
-        text_genre.setBounds(1130, 170, 146, 36);
-        jPanel1.add(text_langd);
-        text_langd.setBounds(1130, 350, 144, 36);
-        jPanel1.add(text_betyg);
-        text_betyg.setBounds(1130, 290, 144, 36);
+        text_titel.setBounds(1130, 114, 146, 32);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/bio.jpg"))); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(1170, 610));
@@ -229,70 +227,102 @@ public class connection extends javax.swing.JFrame {
         jLabel3.setBounds(70, 30, 190, 30);
 
         Jtitel.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        Jtitel.setForeground(new java.awt.Color(240, 240, 240));
+        Jtitel.setForeground(new java.awt.Color(255, 255, 255));
         Jtitel.setText("Title");
         jPanel2.add(Jtitel);
-        Jtitel.setBounds(30, 110, 80, 28);
+        Jtitel.setBounds(28, 116, 80, 28);
 
         jgenre.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jgenre.setForeground(new java.awt.Color(240, 240, 240));
+        jgenre.setForeground(new java.awt.Color(255, 255, 255));
         jgenre.setText("Genre");
         jPanel2.add(jgenre);
-        jgenre.setBounds(30, 170, 80, 28);
+        jgenre.setBounds(28, 178, 80, 28);
 
         jregissor.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jregissor.setForeground(new java.awt.Color(240, 240, 240));
+        jregissor.setForeground(new java.awt.Color(255, 255, 255));
         jregissor.setText("Regissör");
         jPanel2.add(jregissor);
-        jregissor.setBounds(30, 230, 80, 28);
+        jregissor.setBounds(30, 238, 80, 28);
 
         jbetyg.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jbetyg.setForeground(new java.awt.Color(240, 240, 240));
+        jbetyg.setForeground(new java.awt.Color(255, 255, 255));
         jbetyg.setText("Betyg");
         jPanel2.add(jbetyg);
-        jbetyg.setBounds(30, 290, 70, 28);
+        jbetyg.setBounds(32, 298, 70, 28);
 
         jlangd.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
-        jlangd.setForeground(new java.awt.Color(240, 240, 240));
+        jlangd.setForeground(new java.awt.Color(255, 255, 255));
         jlangd.setText("Längd");
         jPanel2.add(jlangd);
-        jlangd.setBounds(30, 350, 80, 28);
+        jlangd.setBounds(32, 358, 80, 28);
 
-        Juppdatera.setText("Uppdatera");
+        Juppdatera.setBackground(new java.awt.Color(255, 255, 255));
+        Juppdatera.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        Juppdatera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/update.png"))); // NOI18N
+        Juppdatera.setText(" Uppdatera");
         Juppdatera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JuppdateraActionPerformed(evt);
             }
         });
         jPanel2.add(Juppdatera);
-        Juppdatera.setBounds(34, 500, 110, 33);
+        Juppdatera.setBounds(22, 500, 134, 33);
 
-        spara.setText("Lägg till");
+        spara.setBackground(new java.awt.Color(255, 255, 255));
+        spara.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        spara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/add.png"))); // NOI18N
+        spara.setText(" Lägg till");
         spara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sparaActionPerformed(evt);
             }
         });
         jPanel2.add(spara);
-        spara.setBounds(32, 444, 110, 33);
+        spara.setBounds(22, 444, 134, 33);
 
-        jRensa.setText("Rensa");
+        jRensa.setBackground(new java.awt.Color(255, 255, 255));
+        jRensa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jRensa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/clear.png"))); // NOI18N
+        jRensa.setText(" Rensa");
         jRensa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRensaActionPerformed(evt);
             }
         });
         jPanel2.add(jRensa);
-        jRensa.setBounds(182, 500, 108, 32);
+        jRensa.setBounds(172, 500, 134, 32);
 
-        jta_bort.setText("Ta bort");
+        jta_bort.setBackground(new java.awt.Color(255, 255, 255));
+        jta_bort.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jta_bort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Filmer/delete.png"))); // NOI18N
+        jta_bort.setText(" Ta bort");
         jta_bort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jta_bortActionPerformed(evt);
             }
         });
         jPanel2.add(jta_bort);
-        jta_bort.setBounds(182, 444, 110, 34);
+        jta_bort.setBounds(172, 444, 134, 34);
+
+        text_genre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_genreActionPerformed(evt);
+            }
+        });
+        jPanel2.add(text_genre);
+        text_genre.setBounds(130, 176, 146, 30);
+        jPanel2.add(text_regissor);
+        text_regissor.setBounds(132, 236, 146, 32);
+        jPanel2.add(text_betyg);
+        text_betyg.setBounds(132, 294, 144, 32);
+
+        text_langd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_langdActionPerformed(evt);
+            }
+        });
+        jPanel2.add(text_langd);
+        text_langd.setBounds(132, 356, 144, 30);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(1000, 0, 310, 570);
@@ -384,6 +414,10 @@ public class connection extends javax.swing.JFrame {
         text_langd.setText("");
 
     }//GEN-LAST:event_jRensaActionPerformed
+
+    private void text_langdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_langdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_langdActionPerformed
 
     /**
      * @param args the command line arguments
